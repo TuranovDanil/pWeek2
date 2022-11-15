@@ -1,0 +1,10 @@
+{% extends "layout/basic.html" %}
+
+{% block content %}
+   <h4>Заявок в работе: {{ counter }}</h4>
+   {% for elem in rec %}
+      <div class="p-3 text-dark">
+           <p><strong>Название:{{ elem.name }} | Категория:{{ elem.category }} | Временная метка:{{ elem.date }} <img src="{{ elem.photo.url }}"></strong><p>
+      </div>
+   {% endfor %}
+{% endblock %}
