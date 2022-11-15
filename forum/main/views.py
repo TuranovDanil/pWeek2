@@ -10,8 +10,9 @@ from .models import Request
 
 
 def index(request):
+
     counter = Request.objects.filter(status="work").all().count()
-    rec = Request.objects.filter(status="completed")[:4]
+    rec = Request.objects.filter(status="completed").order_by('-date')[:4]
     return render(request, 'main/index.html', {'rec': rec, 'counter': counter})
 
 
