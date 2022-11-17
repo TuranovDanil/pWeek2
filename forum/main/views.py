@@ -41,16 +41,15 @@ def profile_status_competed(request):
 def delete(request, pk):
     request = Request.objects.filter(user=request.user, pk=pk, status='new')
     if request:
-        # messages.add_message(request, messages.SUCCESS, 'Заявка создана')
         request.delete()
     return redirect('main:profile')
 
 
-class BBLoginView(LoginView):
+class LoginView(LoginView):
     template_name = 'main/login.html'
 
 
-class BBLogoutView(LoginRequiredMixin, LogoutView):
+class LogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'main/logout.html'
 
 

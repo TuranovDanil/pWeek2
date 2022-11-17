@@ -49,6 +49,11 @@ class Request(models.Model):
                               choices=(('new', 'новая'), ('work', 'принято в работу'), ('completed', 'выполнено')),
                               default='new', blank=False)
     user = models.ForeignKey('AbsUser', verbose_name='Заказчик', on_delete=models.CASCADE, null=True)
+    comment = models.CharField(max_length=250, verbose_name='Комментрарий', blank=True, null=True)
+    photo2 = models.ImageField(upload_to=get_name_file,
+                               validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg', 'bmp']),
+                                           validate_image_size],
+                               blank=True, null=True)
 
     def __str__(self):
         return str(self.name) + ' ' + str(self.category)

@@ -1,7 +1,7 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from django.forms import TextInput
 
 from .models import AbsUser, Request, Category
 
@@ -82,3 +82,15 @@ class CreateRequestForm(forms.ModelForm):
         fields = ('name', 'description', 'category', 'photo')
         enctype = "multipart/form-data"
 
+
+class RequestForm(forms.ModelForm):
+    def clean(self):
+        status = self.cleaned_data.get('status')
+        comment = self.cleaned_data.get('comment')
+        photo2 = self.cleaned_data.get('photo2')
+        if self.instance.status != 'new':
+            raise forms.ValidationError({'status': 'Статус можно сменить только у нового заказа'})
+        if status == 'work' and not comment:
+            raise forms.ValidationError({'comment': 'Нужно ввести комментарий'})
+        if status == 'completed' and not photo2:
+            raise forms.ValidationError({'photo2': 'Нужно загрузить фото'})

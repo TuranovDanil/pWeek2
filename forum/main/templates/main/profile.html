@@ -19,9 +19,7 @@
                     <br> <b>Дата добавления:</b> {{ item.date }} <br> <b>Описание:</b> {{ item.description }}
                     <br><b>Статус:</b>{{ item.status }}</p>
 
-<!--                <a class=" ml-auto h-100" href="{% url 'main:delete' item.pk %}">-->
-<!--                    <button type="button" class="jjj btn-outline-danger " >Удалить</button>-->
-<!--                </a>-->
+                {% if item.status == 'new' %}
                 <a class=" ml-auto h-100" href="#" onclick='del(this,{{ item.pk }})'>
                     <button type="button" class=" btn-outline-danger " >Удалить</button>
 
@@ -29,9 +27,8 @@
                         <button type="button" class=" btn-outline-danger " >Нажми, если уверен</button>
                     </a>
                 </a>
+                {% endif %}
             </div>
-
-
         {% endfor %}
                     <script>
                         del = (target, pk) =>{
