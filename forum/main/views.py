@@ -1,28 +1,53 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from .forms import RegisterUserForm
-from .models import Request
+from .forms import RegisterUserForm, CreateRequestForm
+from .models import Request, AbsUser
 
 
 def index(request):
-
     counter = Request.objects.filter(status="work").all().count()
     rec = Request.objects.filter(status="completed").order_by('-date')[:4]
     return render(request, 'main/index.html', {'rec': rec, 'counter': counter})
 
 
-class BBLoginView(LoginView):
-    template_name = 'main/login.html'
+@login_required
+def profile(request):
+    request_items = request.user.request_set.order_by('-date').all()
+    return render(request, 'main/profile.html', context={'request_items': request_items})
+
+
+def profile_status_new(request):
+    request_items = request.user.request_set.filter(status='new').order_by('-date').all()
+    return render(request, 'main/profile.html', context={'request_items': request_items, })
+
+
+def profile_status_work(request):
+    request_items = request.user.request_set.filter(status='work').order_by('-date').all()
+    return render(request, 'main/profile.html', context={'request_items': request_items, })
+
+
+def profile_status_competed(request):
+    request_items = request.user.request_set.filter(status='competed').order_by('-date').all()
+    return render(request, 'main/profile.html', context={'request_items': request_items, })
 
 
 @login_required
-def profile(request):
-    return render(request, 'main/profile.html')
+def delete(request, pk):
+    request = Request.objects.filter(user=request.user, pk=pk, status='new')
+    if request:
+        # messages.add_message(request, messages.SUCCESS, 'Заявка создана')
+        request.delete()
+    return redirect('main:profile')
+
+
+class BBLoginView(LoginView):
+    template_name = 'main/login.html'
 
 
 class BBLogoutView(LoginRequiredMixin, LogoutView):
@@ -33,3 +58,18 @@ class RegisterViews(CreateView):
     template_name = 'main/register.html'
     form_class = RegisterUserForm
     success_url = reverse_lazy('main:login')
+
+
+@login_required
+def create(request):
+    if request.method == 'POST':
+        form = CreateRequestForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.instance.user_id = request.user.pk
+            form.save()
+            messages.warning(request, 'Заявка создана')
+            return redirect('main:profile')
+    else:
+        form = CreateRequestForm(initial={'author': request.user})
+    context = {'form': form}
+    return render(request, 'main/create.html', context)

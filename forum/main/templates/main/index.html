@@ -1,11 +1,15 @@
 {% extends "layout/basic.html" %}
 
 {% block content %}
-   <h4>Заявок в работе: {{ counter }}</h4>
+   <h5 class="p-3 mb-2 bg-dark text-white text-center">Заявок в работе: {{ counter }}</h5>
    {% for elem in rec %}
-      <div class="d-flex justify-content-between align-items-baseline p-3 text-dark">
-           <p><strong>Название:{{ elem.name }} | Категория:{{ elem.category }} | Временная метка:{{ elem.date }}</strong><p>
-            <img class='' src="{{ elem.photo.url }}">
-      </div>
+        {% for item in rec %}
+            <div class="row p-3 text-dark bg-light">
+                <img class="col-4" src="{{ item.photo.url }}" alt="Фото заявки">
+                <p class="p-3 mb-2"><b>Наименование:</b> {{ item.name }} <br> <b>Категория:</b> {{ item.category }}
+                    <br> <b>Дата добавления:</b> {{ item.date }} <br> <b>Описание:</b> {{ item.description }}
+                    <br><b>Статус:</b>{{ item.status }}</p>
+            </div>
+        {% endfor %}
    {% endfor %}
 {% endblock %}

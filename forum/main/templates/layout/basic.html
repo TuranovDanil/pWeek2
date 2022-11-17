@@ -5,8 +5,6 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!--   <link rel="stylesheet" type="text/css" href="{% static '../../static/style.css' %}">-->
-
 {% bootstrap_css %}
 {% bootstrap_javascript jquery='slim' %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
@@ -17,14 +15,9 @@
    <div class="d-flex flex-column flex-md-row p-3 px-md-4 mb-3  bg-white border-bottom box-shadow">
        <a class="p-2 text-dark" href="{% url 'main:index'  %}">Главная</a>
        {% if user.is_authenticated %}
-       <div class="nav-item dropdown">
-           <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Профиль</a>
-           <div class="dropdown-menu">
-               <a class="dropdown-item" href="{% url 'main:profile' %}">Мои заявки</a>
-               <div class="dropdown-divider"></div>
-               <a class="dropdown-item" href="{% url 'main:logout' %}">Выйти</a>
-           </div>
-       </div>
+           <a class="p-2 text-dark" href="{% url 'main:profile' %}">Мои заявки</a>
+           <a class="p-2 text-dark" href="{% url 'main:create' %}">Создать заявку</a>
+       <a class="p-2 text-dark" href="{% url 'main:logout' %}">Выйти из <strong>{{ user.username }}</strong></a>
        {% else %}
        <a class="p-2 text-dark" href="{% url 'main:register' %}">Регистрация</a>
        <a class="p-2 text-dark" href="{% url 'main:login' %}">Вход</a>

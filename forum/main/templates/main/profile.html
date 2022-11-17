@@ -1,13 +1,51 @@
-{% extends "layout/basic.html" %}
+{% extends 'layout/basic.html' %}
 
 {% load bootstrap4 %}
-
-{% block title %} Профиль пользователя {% endblock %}
-
+{% block title %} Профиль {% endblock %}
 {% block content %}
-   <h2>Профиль пользователя {{ user.username }}</h2>
-   {% if user.first_name and user.last_name %}
-       <p>{{ user.first_name }} {{ user.last_name }} </p>
-   {% endif %}
-   <h3>Ваши заявки</h3>
+    <h4 style="padding-bottom: 10px">Здравствуйте, {{ user.username }}</h4>
+    <h5 class="p-3 mb-2 bg-dark text-white text-center">Ваши заявки</h5>
+    <div class="d-flex justify-content-around">
+        <a class=" h-100" href="{% url 'main:new'%}">Новые</a>
+        <a class=" h-100" href="{% url 'main:work'%}">В работе</a>
+        <a class=" h-100" href="{% url 'main:competed'%}">Готовые</a>
+        <a class=" h-100" href="{% url 'main:profile'%}">Все</a>
+    </div>
+    {% if request_items %}
+        {% for item in request_items %}
+            <div class="d-flex p-3 text-dark bg-light">
+                <img class="col-4" src="{{ item.photo.url }}" alt="Фото заявки">
+                <p class="p-3 mb-2"><b>Наименование:</b> {{ item.name }} <br> <b>Категория:</b> {{ item.category }}
+                    <br> <b>Дата добавления:</b> {{ item.date }} <br> <b>Описание:</b> {{ item.description }}
+                    <br><b>Статус:</b>{{ item.status }}</p>
+
+<!--                <a class=" ml-auto h-100" href="{% url 'main:delete' item.pk %}">-->
+<!--                    <button type="button" class="jjj btn-outline-danger " >Удалить</button>-->
+<!--                </a>-->
+                <a class=" ml-auto h-100" href="#" onclick='del(this,{{ item.pk }})'>
+                    <button type="button" class=" btn-outline-danger " >Удалить</button>
+
+                    <a class="delButton ml-auto" hidden="true" href="{% url 'main:delete' item.pk %}">
+                        <button type="button" class=" btn-outline-danger " >Нажми, если уверен</button>
+                    </a>
+                </a>
+            </div>
+
+
+        {% endfor %}
+                    <script>
+                        del = (target, pk) =>{
+                           let targButton = target;
+                           let delButton = target.nextSibling;
+                           targButton.hidden = true;
+                           delButton.hidden = false;
+                           setTimeout(() => {
+                                delButton.hidden = true;
+                                targButton.hidden = false;
+                                }, 2000);
+                        }
+                    </script>
+    {% else %}
+        <p class="">Вы еще не создали ни одну заявку</p>
+    {% endif %}
 {% endblock %}

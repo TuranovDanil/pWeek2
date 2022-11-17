@@ -1,7 +1,9 @@
 from django import forms
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
-from .models import AbsUser
+from django.forms import ModelForm
+
+from .models import AbsUser, Request, Category
 
 
 class RegisterUserForm(forms.ModelForm):
@@ -70,4 +72,13 @@ class RegisterUserForm(forms.ModelForm):
     class Meta:
         model = AbsUser
         fields = ('surname', 'name', 'patronymic', 'username', 'email', 'password', 'password2', 'personal_data')
+
+
+class CreateRequestForm(forms.ModelForm):
+    photo = forms.ImageField(label='Фото',)
+
+    class Meta:
+        model = Request
+        fields = ('name', 'description', 'category', 'photo')
+        enctype = "multipart/form-data"
 
