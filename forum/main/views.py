@@ -26,6 +26,7 @@ def profile_status(request, status):
     request_items = request.user.request_set.filter(status=status).order_by('-date').all()
     return render(request, 'main/profile.html', context={'request_items': request_items, })
 
+
 @login_required
 def delete(request, pk):
     request = Request.objects.filter(user=request.user, pk=pk, status='new')

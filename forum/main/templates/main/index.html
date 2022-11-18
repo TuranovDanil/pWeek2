@@ -10,7 +10,7 @@
                 <img class="col-4" src="{{ item.photo.url }}" alt="Фото заявки">
                 <p class="p-3 mb-2"><b>Наименование:</b> {{ item.name }} <br> <b>Категория:</b> {{ item.category }}
                     <br> <b>Дата добавления:</b> {{ item.date }} <br> <b>Описание:</b> {{ item.description }}
-                    <br><b>Статус:</b>{{ item.status }}</p>
+                    <br><b>Статус:</b>{{ item.status_verbose }}</p>
             </div>
    {% endfor %}
 {% endblock %}

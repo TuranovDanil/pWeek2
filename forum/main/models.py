@@ -37,6 +37,11 @@ class AbsUser(AbstractUser):
 
 
 class Request(models.Model):
+    STATUS_CHOICES = [
+        ('new', 'новая'),
+        ('work', 'принято в работу'),
+        ('completed', 'выполнено')
+    ]
     name = models.CharField(max_length=250, verbose_name='Имя', blank=False)
     description = models.CharField(max_length=250, verbose_name='Описание', blank=False)
     category = models.ForeignKey('Category', verbose_name='Категория', on_delete=models.CASCADE)

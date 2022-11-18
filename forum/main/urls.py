@@ -18,6 +18,6 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('register/', RegisterViews.as_view(), name='register'),
     path('accounts/create/', create, name='create'),
-    path('accounts/profile/<pk>', delete, name='delete'),
+    path('accounts/delete/<pk>', delete, name='delete'),
 
 ]
