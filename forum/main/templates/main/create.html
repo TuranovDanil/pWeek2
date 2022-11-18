@@ -6,7 +6,7 @@
 {% block title %} Создание заявки {% endblock %}
 
 {% block content %}
-   <h2>Создание заявки</h2>
+   <h5 class="p-3 mb-1 font-weight-normal bg-dark text-white text-center">Создание заявки</h5>
    <form method="post" enctype="multipart/form-data">
        {{ form.non_field_errors }}
        {% csrf_token %}
