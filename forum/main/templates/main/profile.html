@@ -5,24 +5,23 @@
 
 {% block title %} Профиль {% endblock %}
 {% block content %}
-    <h4 style="padding-bottom: 10px">Здравствуйте, {{ user.username }}</h4>
-    <h5 class="p-3 mb-2 bg-dark text-white text-center">Ваши заявки</h5>
-    <div class="d-flex justify-content-around">
-        <a class=" h-100" href="{% url 'main:new'%}">Новые</a>
-        <a class=" h-100" href="{% url 'main:work'%}">В работе</a>
-        <a class=" h-100" href="{% url 'main:competed'%}">Готовые</a>
-        <a class=" h-100" href="{% url 'main:profile'%}">Все</a>
+    <h5 class="p-3 mb-1 font-weight-normal bg-dark text-white text-center">Ваши заявки</h5>
+    <div class="d-flex p-1 mb-1 justify-content-around bg-dark ">
+        <a class="h-100 text-white" href="{% url 'main:new'%}">Новые</a>
+        <a class="h-100 text-white" href="{% url 'main:work'%}">В работе</a>
+        <a class="h-100 text-white" href="{% url 'main:competed'%}">Готовые</a>
+        <a class="h-100 text-white" href="{% url 'main:profile'%}">Все</a>
     </div>
     {% if request_items %}
         {% for item in request_items %}
-            <div class="d-flex p-3 text-dark bg-light">
+            <div class="d-flex p-3 mb-2 text-dark bg-light">
                 <img class="col-4" src="{{ item.photo.url }}" alt="Фото заявки">
                 <p class="p-3 mb-2"><b>Наименование:</b> {{ item.name }} <br> <b>Категория:</b> {{ item.category }}
                     <br> <b>Дата добавления:</b> {{ item.date }} <br> <b>Описание:</b> {{ item.description }}
                     <br><b>Статус:</b>{{ item.status }}</p>
 
                 {% if item.status == 'new' %}
-                <a class=" ml-auto h-100" href="#" onclick='del(this,{{ item.pk }})'>
+                <a class=" ml-auto h-100 p-1" href="#" onclick='del(this,{{ item.pk }})'>
                     <button type="button" class=" btn-outline-danger " >Удалить</button>
 
                     <a class="delButton ml-auto" hidden="true" href="{% url 'main:delete' item.pk %}">
@@ -45,6 +44,6 @@
                         }
                     </script>
     {% else %}
-        <p class="">Вы еще не создали ни одну заявку</p>
+        <p class="">Заявки отсутствуют</p>
     {% endif %}
 {% endblock %}
