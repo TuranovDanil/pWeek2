@@ -6,7 +6,7 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from .forms import RegisterUserForm, CreateRequestForm, LoginForm
+from .forms import RegisterUserForm, CreateRequestForm
 from .models import Request, AbsUser
 
 
@@ -22,20 +22,9 @@ def profile(request):
     return render(request, 'main/profile.html', context={'request_items': request_items})
 
 
-def profile_status_new(request):
-    request_items = request.user.request_set.filter(status='new').order_by('-date').all()
+def profile_status(request, status):
+    request_items = request.user.request_set.filter(status=status).order_by('-date').all()
     return render(request, 'main/profile.html', context={'request_items': request_items, })
-
-
-def profile_status_work(request):
-    request_items = request.user.request_set.filter(status='work').order_by('-date').all()
-    return render(request, 'main/profile.html', context={'request_items': request_items, })
-
-
-def profile_status_completed(request):
-    request_items = request.user.request_set.filter(status='completed').order_by('-date').all()
-    return render(request, 'main/profile.html', context={'request_items': request_items, })
-
 
 @login_required
 def delete(request, pk):

@@ -110,25 +110,6 @@ class RequestForm(forms.ModelForm):
             raise forms.ValidationError({'photo2': 'Нужно загрузить фото'})
 
 
-class LoginForm():
-    username = forms.CharField(label='Логин', widget=forms.TextInput(
-        attrs={'class': "form-control", 'placeholder': "Введите логин", 'id': "InputUsername"}), error_messages={
-        'required': 'Обязательное поле',
-    })
-    password = forms.CharField(label='Пароль',
-                               widget=forms.PasswordInput(
-                                   attrs={'class': "form-control", 'placeholder': "Введите пароль",
-                                          'id': "InputPassword"}),
-                               error_messages={
-                                   'required': 'Обязательное поле',
-                               })
-
-    class Meta:
-        model = AbsUser
-        fields = ('username', 'password')
-        enctype = "multipart/form-data"
-
-
 class UserLoginForm(AuthenticationForm):
     def __init__(self, *args, **kwargs):
         super(UserLoginForm, self).__init__(*args, **kwargs)
