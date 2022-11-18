@@ -4,9 +4,9 @@
 {% load bootstrap4 %}
 
 {% block content %}
-   <h5 class="p-3 mb-2 bg-dark text-white text-center">Заявок в работе: {{ counter }}</h5>
+   <h5 class="p-3 mb-1 font-weight-normal bg-dark text-white text-center">Заявок в работе: {{ counter }}</h5>
         {% for item in rec %}
-            <div class="row p-3 text-dark bg-light">
+            <div class="d-flex p-3 mb-2 text-dark bg-light">
                 <img class="col-4" src="{{ item.photo.url }}" alt="Фото заявки">
                 <p class="p-3 mb-2"><b>Наименование:</b> {{ item.name }} <br> <b>Категория:</b> {{ item.category }}
                     <br> <b>Дата добавления:</b> {{ item.date }} <br> <b>Описание:</b> {{ item.description }}
