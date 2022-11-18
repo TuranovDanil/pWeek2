@@ -11,6 +11,7 @@
        <p>Вы уже выполнили вход.</p>
    {% else %}
        <form method="post">
+           {{ form.non_field_errors }}
            {% csrf_token %}
                 <div class="mb-3">
                     <label for="InputUsername" class="form-label">Логин</label>

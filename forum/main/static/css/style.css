@@ -1,7 +1,18 @@
 .root {
-   font-size: larger;
+  font-size: larger;
 }
-img{
-    width: 200px;
-    margin-left: 50px;
+img {
+  width: 200px;
+  margin-left: 50px;
+}
+html, body{
+    height: 100%;
+}
+.wraper{
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.main{
+    flex: 1 1 auto;
 }

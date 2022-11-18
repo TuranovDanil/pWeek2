@@ -8,6 +8,7 @@
 {% block content %}
    <h5 class="p-3 mb-1 font-weight-normal bg-dark text-white text-center">Регистрация</h5>
    <form method="post">
+       {{ form.non_field_errors }}
        {% csrf_token %}
                     {{form.birth_year}}
                 <div class="mb-3">

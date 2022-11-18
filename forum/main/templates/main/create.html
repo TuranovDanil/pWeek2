@@ -8,9 +8,8 @@
 {% block content %}
    <h2>Создание заявки</h2>
    <form method="post" enctype="multipart/form-data">
+       {{ form.non_field_errors }}
        {% csrf_token %}
-<!--       {% bootstrap_form form layout='horizontal' %}-->
-<!--       {% buttons submit='Создать заявку' %} {% endbuttons %}-->
        <div class="mb-3">
            <label for="InputName" class="form-label" >Название</label>
            {{ form.name }}
