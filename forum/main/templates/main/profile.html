@@ -21,20 +21,18 @@
                     <br><b>Статус:</b>{{ item.status }}</p>
 
                 {% if item.status == 'new' %}
-                <a class=" ml-auto h-100 p-1" href="#" onclick='del(this,{{ item.pk }})'>
-                    <button type="button" class=" btn-outline-danger " >Удалить</button>
-
+                    <button type="button" class="btn-outline-danger ml-auto h-100 p-1" onclick='del(this,{{ item.pk }})'>Удалить</button>
                     <a class="delButton ml-auto" hidden="true" href="{% url 'main:delete' item.pk %}">
                         <button type="button" class=" btn-outline-danger " >Нажми, если уверен</button>
                     </a>
-                </a>
                 {% endif %}
             </div>
         {% endfor %}
                     <script>
                         del = (target, pk) =>{
                            let targButton = target;
-                           let delButton = target.nextSibling;
+                           let delButton = target.nextElementSibling;
+                           console.log(delButton);
                            targButton.hidden = true;
                            delButton.hidden = false;
                            setTimeout(() => {
