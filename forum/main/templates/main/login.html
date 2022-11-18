@@ -1,5 +1,6 @@
 {% extends "layout/basic.html" %}
 
+{% load static %}
 {% load bootstrap4 %}
 
 {% block title %} Вход {% endblock %}
@@ -11,9 +12,18 @@
    {% else %}
        <form method="post">
            {% csrf_token %}
-           {% bootstrap_form form layout='horizontal' %}
-           <input type="hidden" name="next" value="{{ next }}">
-           {% buttons submit='Войти' %} {% endbuttons %}
+                <div class="mb-3">
+                    <label for="InputUsername" class="form-label">Логин</label>
+                    {{form.username}}
+                    {% if form.username.errors %} {{ form.username.errors }} {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="InputPassword" class="form-label">Пароль</label>
+                    {{form.password}}
+                    {% if form.password.errors %} {{ form.password.errors }} {% endif %}
+                </div>
+                <button class="btn btn-dark mt-4 mb-2" type="submit">Войти</button>
+
        </form>
    {% endif %}
 {% endblock %}

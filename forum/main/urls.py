@@ -1,4 +1,5 @@
 from django.urls import path
+from .forms import UserLoginForm
 from .views import index, create, profile_status_work, profile_status_new, profile_status_competed
 from .views import LoginView
 from .views import profile
@@ -11,7 +12,7 @@ app_name = 'main'
 
 urlpatterns = [
     path('', index, name='index'),
-    path('login/', LoginView.as_view(), name='login'),
+    path('login/', LoginView.as_view(template_name='main/login.html', authentication_form=UserLoginForm), name='login'),
     path('accounts/profile/', profile, name='profile'),
     path('accounts/profile/work', profile_status_work, name='work'),
     path('accounts/profile/new', profile_status_new, name='new'),

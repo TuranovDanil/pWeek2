@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm, UsernameField
 from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.forms import TextInput
@@ -7,44 +8,53 @@ from .models import AbsUser, Request, Category
 
 
 class RegisterUserForm(forms.ModelForm):
-    surname = forms.CharField(label='Фамилия',
+    surname = forms.CharField(label='Фамилия', widget=forms.TextInput(
+        attrs={'class': "form-control", 'placeholder': "Введите фамилию", 'id': "InputSurname", }),
                               validators=[RegexValidator('^[а-яА-Я- ]+$',
                                                          message='только кирилица и тире')],
                               error_messages={
                                   'required': 'Обязательное поле',
-                              })
+                              }, )
     name = forms.CharField(label='Имя',
                            validators=[RegexValidator('^[а-яА-Я- ]+$',
                                                       message='только кирилица и тире')],
                            error_messages={
                                'required': 'Обязательное поле',
-                           })
+                           }, widget=forms.TextInput(
+            attrs={'class': "form-control", 'placeholder': "Введите имя", 'id': "InputName"}))
     patronymic = forms.CharField(label='Отчество',
                                  validators=[RegexValidator('^[а-яА-Я- ]+$',
                                                             message='только кирилица и тире')],
                                  error_messages={
                                      'required': 'Обязательное поле',
-                                 })
+                                 }, widget=forms.TextInput(
+            attrs={'class': "form-control", 'placeholder': "Введите отчество", 'id': "InputPatronymic"}))
     username = forms.CharField(label='Логин',
                                validators=[RegexValidator('^[a-zA-z-]+$',
                                                           message='только латиница и тире')],
                                error_messages={
                                    'required': 'Обязательное поле',
                                    'unique': 'Данный логин занят'
-                               })
+                               }, widget=forms.TextInput(
+            attrs={'class': "form-control", 'placeholder': "Введите логин", 'id': "InputUsername"}))
     email = forms.EmailField(label='Почта',
                              error_messages={
                                  'required': 'Обязательное поле',
                                  'invalid': 'Не правильный формат',
                                  'unique': 'Адрес занят'
-                             })
+                             }, widget=forms.TextInput(
+            attrs={'class': "form-control", 'placeholder': "Введите почту", 'id': "InputEmail"}))
     password = forms.CharField(label='Пароль',
-                               widget=forms.PasswordInput,
+                               widget=forms.PasswordInput(
+                                   attrs={'class': "form-control", 'placeholder': "Введите пароль",
+                                          'id': "InputPassword"}),
                                error_messages={
                                    'required': 'Обязательное поле',
                                })
     password2 = forms.CharField(label='Пароль (повторно)',
-                                widget=forms.PasswordInput,
+                                widget=forms.PasswordInput(
+                                    attrs={'class': "form-control", 'placeholder': "Введите пароль",
+                                           'id': "InputPassword2"}),
                                 error_messages={
                                     'required': 'Обязательное поле',
                                 })
@@ -75,7 +85,11 @@ class RegisterUserForm(forms.ModelForm):
 
 
 class CreateRequestForm(forms.ModelForm):
-    photo = forms.ImageField(label='Фото',)
+    photo = forms.ImageField(label='Фото')
+    name = forms.CharField(widget=forms.TextInput(
+        attrs={'class': "form-control", 'placeholder': "Введите название", 'id': "InputName"}))
+    description = forms.CharField(widget=forms.TextInput(
+        attrs={'class': "form-control", 'placeholder': "Введите описание", 'id': "InputDescription"}))
 
     class Meta:
         model = Request
@@ -94,3 +108,34 @@ class RequestForm(forms.ModelForm):
             raise forms.ValidationError({'comment': 'Нужно ввести комментарий'})
         if status == 'completed' and not photo2:
             raise forms.ValidationError({'photo2': 'Нужно загрузить фото'})
+
+
+class LoginForm():
+    username = forms.CharField(label='Логин', widget=forms.TextInput(
+        attrs={'class': "form-control", 'placeholder': "Введите логин", 'id': "InputUsername"}), error_messages={
+        'required': 'Обязательное поле',
+    })
+    password = forms.CharField(label='Пароль',
+                               widget=forms.PasswordInput(
+                                   attrs={'class': "form-control", 'placeholder': "Введите пароль",
+                                          'id': "InputPassword"}),
+                               error_messages={
+                                   'required': 'Обязательное поле',
+                               })
+
+    class Meta:
+        model = AbsUser
+        fields = ('username', 'password')
+        enctype = "multipart/form-data"
+
+
+class UserLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(UserLoginForm, self).__init__(*args, **kwargs)
+
+    username = UsernameField(widget=forms.TextInput(
+        attrs={'class': 'form-control', 'placeholder': 'Введите логин', 'id': 'InputUsername'}))
+    password = forms.CharField(widget=forms.PasswordInput(
+        attrs={
+            'class': 'form-control', 'placeholder': 'Введите пароль', 'id': 'InputPassword',
+        }))

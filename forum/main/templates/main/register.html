@@ -1,14 +1,55 @@
 {% extends "layout/basic.html" %}
 
+{% load static %}
 {% load bootstrap4 %}
 
 {% block title %} Регистрация {% endblock %}
 
 {% block content %}
-   <h2>Регистрация нового пользователя</h2>
+   <h5 class="p-3 mb-1 font-weight-normal bg-dark text-white text-center">Регистрация</h5>
    <form method="post">
        {% csrf_token %}
-       {% bootstrap_form form layout='horizontal' %}
-       {% buttons submit='Зарегистрироваться' %} {% endbuttons %}
+                    {{form.birth_year}}
+                <div class="mb-3">
+                    <label for="InputSurname" class="form-label">Фамилия</label>
+                    {{ form.surname }}
+                    {% if form.surname.errors %} {{ form.surname.errors }} {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="InputDescription" class="form-label">Имя</label>
+                    {{ form.name }}
+                    {% if form.name.errors %} {{ form.name.errors }} {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="InputPatronymic" class="form-label">Отчество</label>
+                    {{ form.patronymic }}
+                    {% if form.patronymic.errors %} {{ form.patronymic.errors }} {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="InputUsername" class="form-label">Логин</label>
+                    {{ form.username }}
+                    {% if form.username.errors %} {{ form.username.errors }} {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="InputEmail" class="form-label">Почта</label>
+                    {{ form.email }}
+                    {% if form.email.errors %} {{ form.email.errors }} {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="InputPassword" class="form-label">Пароль</label>
+                    {{ form.password }}
+                    {% if form.password.errors %} {{ form.password.errors }} {% endif %}
+                </div>
+                <div class="mb-3">
+                    <label for="InputPassword2" class="form-label">Пароль (повторно)</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %} {{ form.password2.errors }} {% endif %}
+                </div>
+                <div class="mb-3">
+                        Согласие на обработку данных
+                    {{ form.personal_data }}
+                    {% if form.personal_data.errors %} {{ form.personal_data.errors }} {% endif %}
+                </div>
+                <button class="btn btn-dark mt-4 mb-2" type="submit">Зарегистрироваться</button>
    </form>
 {% endblock %}

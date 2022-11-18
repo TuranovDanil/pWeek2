@@ -6,7 +6,7 @@ from django.contrib.auth.views import LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
-from .forms import RegisterUserForm, CreateRequestForm
+from .forms import RegisterUserForm, CreateRequestForm, LoginForm
 from .models import Request, AbsUser
 
 

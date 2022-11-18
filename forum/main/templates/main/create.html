@@ -1,5 +1,6 @@
 {% extends "layout/basic.html" %}
 
+{% load static %}
 {% load bootstrap4 %}
 
 {% block title %} Создание заявки {% endblock %}
@@ -8,8 +9,33 @@
    <h2>Создание заявки</h2>
    <form method="post" enctype="multipart/form-data">
        {% csrf_token %}
-       {% bootstrap_form form layout='horizontal' %}
-       {% buttons submit='Создать заявку' %} {% endbuttons %}
-   </form>
+<!--       {% bootstrap_form form layout='horizontal' %}-->
+<!--       {% buttons submit='Создать заявку' %} {% endbuttons %}-->
+       <div class="mb-3">
+           <label for="InputName" class="form-label" >Название</label>
+           {{ form.name }}
+           {% if form.name.errors %} {{ form.name.errors }} {% endif %}
+       </div>
+       <div class="mb-3">
+           <label for="InputDescription" class="form-label" >Описание</label>
+           {{ form.description }}
+           {% if form.description.errors %} {{ form.description.errors }} {% endif %}
+       </div>
+       <div class="mb-3">
+        <label for="SelectCategory" class="form-label">Выберете категорию</label>
+           {{form.category}}
+           {% if form.category.errors %} {{ form.category.errors }} {% endif %}
+       </div>
+       <div class="mb-3 ">
+           <p>Загрузите Фото</p>
+           {{ form.photo}}
+           {% if form.photo.errors %} {{ form.photo.errors }} {% endif %}
+       </div>
+       <button class="btn btn-dark mt-4 mb-2" type="submit">Создать заявку</button>
 
+   </form>
+<script>
+    let sel = document.querySelector('#id_category');
+    sel.classList.add('form-control');
+</script>
 {% endblock %}
