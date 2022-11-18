@@ -32,8 +32,8 @@ def profile_status_work(request):
     return render(request, 'main/profile.html', context={'request_items': request_items, })
 
 
-def profile_status_competed(request):
-    request_items = request.user.request_set.filter(status='competed').order_by('-date').all()
+def profile_status_completed(request):
+    request_items = request.user.request_set.filter(status='completed').order_by('-date').all()
     return render(request, 'main/profile.html', context={'request_items': request_items, })
 
 
